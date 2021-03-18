@@ -6,7 +6,13 @@ class CreateUserController {
   constructor(private createUserUseCase: CreateUserUseCase) {}
 
   handle(request: Request, response: Response): Response {
-    // Complete aqui
+    try {
+      return response
+        .status(201)
+        .json(this.createUserUseCase.execute(request.body));
+    } catch (error) {
+      return response.status(400).json({ error: "User already exists" });
+    }
   }
 }
 
